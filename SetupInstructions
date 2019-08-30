@@ -1,0 +1,5 @@
+1. It's recommended that you run the project in eclipse.
+2. Edit static variables in DBConnection.java according to your mysql location and credentials.
+3. Import all libraries stored in WebContent/WEB-INF/lib/ .
+4. Create a database named account in mysql.
+5. Deploy the project on a suitable localhost server (Also make sure that the mysql server is running).
