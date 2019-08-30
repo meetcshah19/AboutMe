@@ -4,9 +4,9 @@ package com.controller;
 
 import java.io.IOException;
 
+
 import java.sql.SQLException;
 import java.sql.Statement;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,11 +33,21 @@ public class WriteData extends HttpServlet {
     	java.sql.Connection c=DBConnection.getConnection();
     	String email=(String)request.getParameter("email");
     	String query=(String)request.getParameter("query");
+    	Statement stmt=null;
     	try {
-			Statement stmt=c.createStatement();
-			stmt.execute("insert into queries values ('"+email+"','"+query+"');");
+			stmt=c.createStatement();
+			boolean execute = stmt.execute("insert into queries values ('"+email+"','"+query+"');");
+			System.out.println(execute);
+			c.commit();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			try {
+				stmt.execute("create table queries (email varchar(255),query text);");
+				stmt.execute("insert into queries values ('"+email+"','"+query+"');");
+				c.commit();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
 		}
     	
